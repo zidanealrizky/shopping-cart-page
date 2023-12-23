@@ -43,10 +43,10 @@ document.addEventListener("click", function (e) {
 // modal box
 
 const itemDetailModal = document.querySelector("#item-detail-modal");
-const itemDetailButton = document.querySelectorAll(".item-detail-btn");
+const itemDetailButtons = document.querySelector(".item-detail-btn");
 
 // membuat function css menjadi display flex
-itemDetailButton.forEach((btn) => {
+itemDetailButtons.forEach((btn) => {
   btn.onclick = (e) => {
     itemDetailModal.style.display = "flex";
     e.preventDefault();
