@@ -1,8 +1,9 @@
 // toggle class active hamburger menu
 const navbarNav = document.querySelector(".navbar-nav");
 // ketika hamburger menu diklik
-document.querySelector("#hamburger-menu").onclick = () => {
+document.querySelector("#hamburger-menu").onclick = (e) => {
   navbarNav.classList.toggle("active");
+  e.preventDefault();
 };
 // toggle class active search form
 const searchForm = document.querySelector(".search-form");
@@ -43,7 +44,7 @@ document.addEventListener("click", function (e) {
 // modal box
 
 const itemDetailModal = document.querySelector("#item-detail-modal");
-const itemDetailButtons = document.querySelector(".item-detail-btn");
+const itemDetailButtons = document.querySelectorAll(".item-detail-btn");
 
 // membuat function css menjadi display flex
 itemDetailButtons.forEach((btn) => {

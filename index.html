@@ -22,8 +22,11 @@
     <!-- alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    <!-- app -->
-    <script src="js/src/app.js"></script>
+    
+    <!-- midtrans -->
+    <script type="text/javascript"
+      src="https://app.sandbox.midtrans.com/snap/snap.js"
+      data-client-key="SB-Mid-client-RCGfZde0DCb13nEt"></script>
     </head>
   </head>
   <body>
@@ -56,23 +59,25 @@
       <div class="shopping-cart">
         <template x-for="(item, index) in $store.cart.items" x-key="index">
           <div class="cart-item">
-            <img :src="products/${item.img}" :alt="item.nama" />
+            <img :src="`products/${item.img}`" :alt="item.nama" />
             <div class="item-detail">
               <h3 x-text="item.nama"></h3>
               <div class="item-price">
-                <span x-text="rupiah(item.price)"></span> &times;
+                <span x-text="item.price"></span> &times;
                 <button id="remove" @click="$store.cart.remove(item.id)">&minus;</button>
                 <span x-text="item.quantity"></span>
                 <button id="add" @click="$store.cart.add(item)">&plus;</button> &equals;
-                <span x-text="rupiah(item.total)"></span>
+                <span x-text="item.total"></span>
               </div>
             </div>
           </div>
         </template>
         <h4 x-show="!$store.cart.items.length" style="margin-top: 1rem;">Cart is Empty</h4>
-        <h4 x-show="$store.cart.items.length">Total : <span x-text="rupiah($store.cart.total)"></span></h4>
+        <h4 x-show="$store.cart.items.length">Total : <span x-text="$store.cart.total"></span></h4>
         <div class="form-container" x-show="$store.cart.items.length">
           <form action="" id="checkoutForm">
+            <input type="hidden" name="items" x-model="JSON.stringify($store.cart.items)">
+            <input type="hidden" name="" x-model="$store.cart.total">
             <h5>Customer Detail</h5>
   
             <label for="name">
@@ -88,7 +93,7 @@
               <input type="number" name="phone" id="phone" autocomplete="off">
             </label>
   
-            <button class="checkout-button" type="submit" id="checkout-button" value="checkout">Checkout</button>
+            <button class="checkout-button " type="submit" id="checkout-button">Checkout</button>
           </form>
         </div>
       </div>
@@ -107,7 +112,7 @@
       </main>
     </section>
     <!-- hero section end -->
-
+    
     <!-- about section start -->
     <section id="about" class="about">
       <h2><span>Tentang</span> Kami</h2>
@@ -184,16 +189,16 @@
                 <div class="product-icons">
                     <a href="#" @click.prevent="$store.cart.add(item)">
                       <svg
-  width="24"
-  height="24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <use href="img/feather-sprite.svg#shopping-cart" />
-</svg>
+                      width="24"
+                      height="24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      >
+                      <use href="img/feather-sprite.svg#shopping-cart" />
+                    </svg>
                     </a>
                     <a href="#" class="item-detail-btn">
                       <svg
@@ -213,9 +218,9 @@
                     <img :src="`products/${item.img}`" :alt="item.name" />
                 </div>
                 <div class="product-content">
-                    <h3 x-text="item.nama"></h3>
-                    <div class="product-stars">
-                      <svg
+                  <h3 x-text="item.nama"></h3>
+                  <div class="product-stars">
+                    <svg
                       width="24"
                       height="24"
                       fill="currentColor"
@@ -234,7 +239,7 @@
                       stroke-width="2"
                       stroke-linecap="round"
                       stroke-linejoin="round"
-                    >
+                      >
                       <use href="img/feather-sprite.svg#star" />
                     </svg>
                       <svg
@@ -271,7 +276,7 @@
                       <use href="img/feather-sprite.svg#star" />
                     </svg>
                     </div>
-                    <div class="product-price"><span x-text="rupiah(item.price)"></span></div>
+                    <div class="product-price"><span x-text="item.price"></span></div>
                 </div>
             </div>
         </template>
@@ -313,7 +318,7 @@
       </div>
     </section>
     <!-- contact section end -->
-
+    
     <!-- footer section start -->
     <footer>
       <div class="socials">
@@ -335,7 +340,7 @@
       </div>
     </footer>
     <!-- footer section end -->
-
+    
     <!-- modal box item detail start -->
     <div class="modal" id="item-detail-modal">
       <div class="modal-container">
@@ -366,6 +371,8 @@
       </div>
     </div>
     <!-- modal box item detail end -->
+    <!-- app -->
+    <script src="js/src/app.js" ></script>
 
     <!-- Feather Icons -->
     <script>

@@ -54,7 +54,7 @@ document.addEventListener("alpine:init", () => {
             item.quantity--;
             item.total = item.price * item.quantity;
             this.quantity--;
-            this.total -= item.rpice;
+            this.total -= item.price;
             return item;
           }
         });
@@ -67,6 +67,63 @@ document.addEventListener("alpine:init", () => {
     },
   });
 });
+
+// form validation
+const checkoutButton = document.querySelector(".checkout-button");
+// checkoutButton.disabled = true;
+
+const form = document.querySelector("#checkoutForm");
+
+// form.addEventListener("keyup", function () {
+//   for (let i = 0; i < form.elements.length; i++) {
+//     if (form.elements[i].value.length !== 0) {
+//       checkoutButton.classList.remove("disabled");
+//       checkoutButton.classList.add("disabled");
+//     } else {
+//       return false;
+//     }
+//   }
+//   checkoutButton.disabled = false;
+//   checkoutButton.classList.remove("disabled");
+// });
+
+// kirim data ketika tombol checkout diklik
+checkoutButton.addEventListener("click", async function (e) {
+  e.preventDefault();
+  const formData = new FormData(form);
+  const data = new URLSearchParams(formData);
+  const objData = Object.fromEntries(data);
+  // const message = formatMessage(objData);
+  // window.open("http://wa.me/6287891547226?text=" + encodeURIComponent(message));
+
+  // minta transaction token menggunakan ajax / fetch
+  try {
+    const response = await fetch("../../php/placeOrder.php", {
+      method: "POST",
+    });
+    const token = await response.text();
+    console.log(token);
+    window.snap.pay(token);
+  } catch (err) {
+    console.log(err.message);
+  }
+});
+
+// format pesan whatsapp
+
+// const formatMessage = (obj) => {
+//   return `Data Customer
+//   Nama: ${obj.name}
+//   Email: ${obj.email}
+//   NO Hp: ${obj.phone}
+// Data Pesanan
+//   ${JSON.parse(obj.items).map(
+//     (item) => `${item.name} (${item.quantity} x ${rupiah(item.total)}) \n`
+//   )}
+// TOTAL: ${rupiah(obj.total)}
+// Terima kasih.
+//   `;
+// };
 
 // konversi ke rupiah
 const rupiah = (number) => {
